@@ -5,6 +5,7 @@ CREATE COMPUTE MODULE TestFlow1_Compute
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
+		-- complete message copied
 		RETURN TRUE;
 	END;
 
