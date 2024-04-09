@@ -31,4 +31,17 @@ public class Sender {
 		}
 		
 	}
+	
+	public void sendMessage2Queue(String qName, String message) {
+        try {
+			MessageProducer producer = session.createProducer(session.createQueue(qName));
+			producer.send(session.createTextMessage(message));
+			producer.close();
+			session.close();
+		} catch (JMSException e) {
+			System.err.println(e.toString());
+		}
+		
+	}
+
 }

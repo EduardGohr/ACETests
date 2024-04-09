@@ -11,10 +11,9 @@ public class ConnectionManager {
 		this.host = host;
 		this.port = port;
 		
-        ConnectionFactory cf = new JmsConnectionFactory("amqp://" + this.host + ":" + this.port + "?amqp.idleTimeout=-1");
+        ConnectionFactory cf = new JmsConnectionFactory("amqp://" + this.host + ":" + this.port + "?amqp.idleTimeout=-1&jms.clientID=AMQPTestClient");
         try {
 			this.connection = cf.createConnection();
-			System.out.println("ClientID: " + this.connection.getClientID());
 		} catch (JMSException e) {
 			System.err.println(e.toString());
 		}

@@ -41,6 +41,37 @@ public class Receiver implements MessageListener {
         
 	}
 
+	public void receiveTextMessageFromQueue(String qName) {
+        try {
+			MessageConsumer consumer = session.createConsumer(session.createQueue(qName));
+			for (int i = 1; i <= 20; i++) {
+                Message message = consumer.receive(1000);
+                if (message != null) {
+                    if (message instanceof TextMessage) {
+                        TextMessage textMessage = (TextMessage) message;
+                        System.out.println("Received message: " + textMessage.getText());
+                    } else {
+                        System.out.println("Received message of unsupported type: " + message.getClass().getName());
+                    }
+
+                }
+            }			
+//			consumer.setMessageListener(this);
+			
+//			Thread.sleep(20000);
+			
+			if (consumer != null) { 
+				consumer.close();
+			}
+			
+			session.close();
+			
+		} catch (JMSException e) {
+			System.err.println(e.toString());
+		}
+        
+	}
+	
 	private Session session;
 	
 
