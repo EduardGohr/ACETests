@@ -1,8 +1,10 @@
 package de.onpoint.amqp.client;
 
-import javax.jms.*;
-
 import org.apache.qpid.jms.JmsConnectionFactory;
+
+import jakarta.jms.Connection;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.JMSException;
 
 public class ConnectionManager {
 	
@@ -11,7 +13,7 @@ public class ConnectionManager {
 		this.host = host;
 		this.port = port;
 		
-        ConnectionFactory cf = new JmsConnectionFactory("amqp://" + this.host + ":" + this.port + "?amqp.idleTimeout=-1&jms.clientID=AMQPTestClient");
+        ConnectionFactory cf = new JmsConnectionFactory("amqp://" + this.host + ":" + this.port + "?amqp.idleTimeout=-1");
         try {
 			this.connection = cf.createConnection();
 		} catch (JMSException e) {

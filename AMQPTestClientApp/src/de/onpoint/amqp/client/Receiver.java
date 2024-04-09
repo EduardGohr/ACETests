@@ -1,12 +1,12 @@
 package de.onpoint.amqp.client;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.Session;
-import javax.jms.TextMessage;
+import jakarta.jms.Connection;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.MessageListener;
+import jakarta.jms.Session;
+import jakarta.jms.TextMessage;
 
 public class Receiver implements MessageListener {
 
@@ -28,7 +28,7 @@ public class Receiver implements MessageListener {
 			consumer.setMessageListener(this);
 			
 			Thread.sleep(20000);
-			
+						
 			if (consumer != null) { 
 				consumer.close();
 			}
@@ -36,7 +36,7 @@ public class Receiver implements MessageListener {
 			session.close();
 			
 		} catch (JMSException | InterruptedException e) {
-			System.err.println(e.toString());
+			System.err.println(e.getMessage());
 		}
         
 	}
@@ -44,29 +44,17 @@ public class Receiver implements MessageListener {
 	public void receiveTextMessageFromQueue(String qName) {
         try {
 			MessageConsumer consumer = session.createConsumer(session.createQueue(qName));
-			for (int i = 1; i <= 20; i++) {
-                Message message = consumer.receive(1000);
-                if (message != null) {
-                    if (message instanceof TextMessage) {
-                        TextMessage textMessage = (TextMessage) message;
-                        System.out.println("Received message: " + textMessage.getText());
-                    } else {
-                        System.out.println("Received message of unsupported type: " + message.getClass().getName());
-                    }
-
-                }
-            }			
-//			consumer.setMessageListener(this);
+			consumer.setMessageListener(this);
 			
-//			Thread.sleep(20000);
+			Thread.sleep(20000);
 			
 			if (consumer != null) { 
 				consumer.close();
 			}
 			
 			session.close();
-			
-		} catch (JMSException e) {
+			 
+		} catch (JMSException | InterruptedException e) {
 			System.err.println(e.toString());
 		}
         
