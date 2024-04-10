@@ -62,6 +62,8 @@ public class Receiver implements MessageListener {
 	
 	private Session session;
 	
+	private String messageText = "";
+	
 
 	@Override
 	public void onMessage(Message message) {
@@ -69,8 +71,9 @@ public class Receiver implements MessageListener {
             if (message instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) message;
                 System.out.println("Received message: " + textMessage.getText());
+                this.messageText = this.messageText + "\n" + textMessage.getText();
             } else {
-                System.out.println("Received message of unsupported type: " + message.getClass().getName());
+                System.err.println("Received message of unsupported type: " + message.getClass().getName());
             }
         } catch (JMSException e) {
             e.printStackTrace();
@@ -78,6 +81,10 @@ public class Receiver implements MessageListener {
 
 	public Session getSession() {
 		return session;
+	}
+
+	public String getMessageText() {
+		return messageText;
 	}
 	
 }

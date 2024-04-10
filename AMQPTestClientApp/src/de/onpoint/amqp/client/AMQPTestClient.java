@@ -41,10 +41,6 @@ public class AMQPTestClient {
             	System.out.println("Please provide a queue name or topic name!");
             	System.exit(1);
             }
-            if (cmd.getOptionValue("inF") == null && cmd.getOptionValue("outF") == null) {
-            	System.out.println("Please provide an input or output file name!");
-            	System.exit(1);
-            }
             
         } catch (ParseException e) {
             System.out.println(e.getMessage());
@@ -70,7 +66,6 @@ public class AMQPTestClient {
 			String inputContent = "";
 			try {
 				inputContent = new String(Files.readAllBytes(Paths.get(inFile)));
-				System.out.println("Input content: " + inputContent);
 	        } catch (IOException e) {
 	        	System.out.println(e.getMessage());
 	        }			
@@ -93,6 +88,19 @@ public class AMQPTestClient {
 				receiver.receiveTextMessageFromTopic(topic);
 			else
 				receiver.receiveTextMessageFromQueue(queue);
+			
+			if (!receiver.getMessageText().isEmpty()) {
+				if (outFile != null) {
+					try {
+			            Files.write(Paths.get(outFile), receiver.getMessageText().getBytes());
+			        } catch (IOException e) {
+			            e.printStackTrace();
+			        }					
+				}				
+			}
+			else {
+				System.out.println("No messages received!");
+			}
 		}
 		
 		System.exit(0);
