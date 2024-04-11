@@ -2,7 +2,7 @@ The **AMQPTestClientApp** project implements a simple application for testing AM
 
 In the *target* folder you'll find an executable Java jar file containing the current application version. It should be executed like:
 ```
-java -jar AMQPTestClient.jar -option1 value1 -option1 value1 ...
+java -jar AMQPTestClient.jar -option1 value1 -option2 value2 ...
 ```
 Below is a short description of the command line options:
 ```
